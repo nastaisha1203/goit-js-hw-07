@@ -26,17 +26,20 @@ function onElementGallery(evt) {
   if (evt.target.nodeName !== "IMG") {
     return;
   }
+  const options = {
+    onShow: () => document.addEventListener("keydown", closeEsc),
+    onClose: () => document.removeEventListener("keydown", closeEsc),
+  };
   const instance = basicLightbox.create(
-    `<img src = '${evt.target.dataset.source}'>`
+    `<img src = '${evt.target.dataset.source}'>`,
+    options
   );
   instance.show();
-
-  window.addEventListener("keydown", closeEsc);
 
   function closeEsc(evt) {
     if (evt.code === "Escape") {
       instance.close();
     }
-    return;
+    console.log(instance.element());
   }
 }
